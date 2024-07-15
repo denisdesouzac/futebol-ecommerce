@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+    <head>
+        {% load static %}
+        <link rel="stylesheet" href="{% static 'mystyles.css' %}">
+        <title>{% block titulo %}{% endblock %}</title>
+    </head>
+    <body>
+        <nav class="topnav">
+            <a href="/">Principal</a>
+            <a href="/loja">Loja</a>
+            <a href="/sobre">Sobre</a>
+            <a href="/auth/login">LOGIN</a>
+            <a href="/auth/cadastro">CADASTRE-SE</a>
+            <a href="/auth/logout">LOGOUT</a>
+        </nav>
+        {% block conteudo %}
+        {% endblock %}
+    </body>
+</html>
+
