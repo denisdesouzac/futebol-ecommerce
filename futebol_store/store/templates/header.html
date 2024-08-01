@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'mystyle.css' %}">
+    <title>{% block titulo %}{% endblock %}</title>
+</head>
+<body>
+    <header>
+        <img src="/media/logo.jpg" alt="">
+        <div class="botao-container">
+            <button class="botao logar">Logar</button>
+            <button class="botao cadastre-se">Cadastre-se</button>
+        </div>
+    </header>
+    {% block conteudo %}
+    {% endblock %}
+</body>
+</html>
