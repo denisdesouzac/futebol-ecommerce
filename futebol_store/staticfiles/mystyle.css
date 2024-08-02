@@ -42,7 +42,7 @@ header img {
 }
 
 .cadastre-se {
-  background-color: #008CBA;
+  background-color: #123e85;
   color: white;
 }
 
@@ -112,8 +112,60 @@ a:link, a:visited {
 }
 
 .carousel-inner img {
-  width: 100%;
+  height: auto; /* Ajusta a altura automaticamente */
+  max-height: 500px; /* Limita a altura máxima do carrossel */
+  object-fit: cover; /* Corta as bordas da imagem para caber no contêiner */
+}
+
+.overlay-image {
+  position: absolute;
+  top: 10%; /* Ajuste a porcentagem para posicionar a imagem mais para cima */
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 2; /* Coloca a imagem sobre o carrossel */
+  display: flex;
+  justify-content: center;
+}
+
+/* Ajusta o tamanho da imagem */
+.overlay-img {
+  max-width: 70%; /* Ajuste o tamanho da imagem */
+  width: 100%; /* Mantém a largura da imagem consistente */
   height: auto;
-  max-height: 500px;
-  object-fit: cover;
+}
+
+/* CSS para centralizar o botão abaixo do carrossel */
+.overlay-button {
+  position: absolute;
+  bottom: 10%; /* Ajuste conforme necessário */
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 2;
+}
+
+/* Estilizando o botão */
+.overlay-button {
+  position: absolute;
+  bottom: 10%; /* Ajuste conforme necessário */
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 2;
+}
+
+/* Estilizando o botão */
+.overlay-button .btn {
+  padding: 8px 16px; /* Tamanho reduzido do botão */
+  font-size: 16px; /* Tamanho reduzido do texto */
+  border-radius: 25px; /* Borda arredondada */
+  background-color: #fe8100; /* Cor do fundo */
+  color: #123e85; /* Cor do texto */
+  border: none;
+  transition: background-color 0.3s ease; /* Efeito de transição */
+}
+
+/* Efeito hover */
+.overlay-button .btn:hover {
+  background-color: #123e85; /* Cor do fundo ao passar o mouse */
+  color: #fe8100;
+  text-decoration: none; /* Remove o sublinhado do link */
 }
