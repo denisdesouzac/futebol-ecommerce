@@ -1,0 +1,138 @@
+/* Flipcard Container */
+.flipcard-container {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  margin: 50px auto;
+  max-width: 1200px;
+  padding: 0 20px;
+}
+
+/* Flipcard Wrapper */
+.flipcard-wrapper {
+  width: 300px; /* Tamanho do flipcard */
+  height: 400px; /* Tamanho do flipcard */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  perspective: 1000px;
+}
+
+/* Flipcard Styles */
+.flipcard {
+  width: 95%;
+  height: 95%;
+  position: relative;
+  transition: transform 2s;
+  transform-style: preserve-3d;
+}
+
+.flipcard .front, .flipcard .back {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  backface-visibility: hidden;
+  border-radius: 12px;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, .5);
+}
+
+.flipcard .front {
+  z-index: 2;
+  background: white;
+}
+
+.flipcard .front img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 12px;
+}
+
+.flipcard .back {
+  z-index: 1;
+  color: #ffff;
+  transform: rotateY(180deg);
+}
+
+.flip1 .back{
+  background: #3D5C83;
+}
+
+.flip2 .back{
+  background: #3DA053;
+}
+
+.flip3 .back{
+  background: #F09D3A;
+}
+
+.flipcard-wrapper:hover .flipcard {
+  transform: rotateY(180deg);
+}
+
+.flipcard-container h4 {
+  margin: 160px 20px;
+  font-size: 24px;
+  color: #ffff;
+  text-align: center;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+  .flipcard-container {
+      flex-direction: column;
+      align-items: center;
+  }
+}
+
+/* Botão personalizado */
+.btn-outline-custom {
+  border: 2px solid #fff; /* Borda branca */
+  color: #fff; /* Texto branco */
+  background-color: transparent; /* Fundo transparente */
+  border-radius: 12px; /* Bordas arredondadas */
+  padding: 10px 20px;
+  transition: all 0.3s ease;
+  display: inline-block;
+  text-align: center;
+  margin: 0 auto; /* Centraliza o botão */
+  position: absolute; /* Para posicionamento absoluto */
+  bottom: 20px; /* Espaço do fundo da flipcard */
+  left: 50%; /* Alinha horizontalmente ao centro */
+  transform: translateX(-50%); /* Ajusta a centralização */
+  text-decoration: none;
+}
+
+.btn-outline-custom:hover {
+  background: #ffff; /* Fundo branco no hover */
+}
+
+/* Cor do botão conforme o flipcard */
+.flip1 .btn-outline-custom {
+  color: #fff; /* Cor do texto */
+}
+
+.flip2 .btn-outline-custom {
+  color: #fff; /* Cor do texto */
+}
+
+.flip3 .btn-outline-custom {
+  color: #fff; /* Cor do texto */
+}
+
+/* Hover Colors */
+.flip1 .btn-outline-custom:hover {
+  color: #3D5C83; /* Cor do texto no hover */
+}
+
+.flip2 .btn-outline-custom:hover {
+  color: #3DA053; /* Cor do texto no hover */
+}
+
+.flip3 .btn-outline-custom:hover {
+  color: #F09D3A; /* Cor do texto no hover */
+}
+
