@@ -8,8 +8,8 @@ def principal(request):
 
 def loja(request): 
     template = loader.get_template('loja.html')
-    return HttpResponse(template.render)
+    return HttpResponse(template.render())
 
 def sobre(request):
     template = loader.get_template('sobre.html')
-    return HttpResponse(template.render)
+    return HttpResponse(template.render())

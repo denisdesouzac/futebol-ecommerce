@@ -69,9 +69,9 @@ header img {
   color: #ffffff;
 }
 
-.mycard {
+.balao {
   background-color: #f1f1f1;
-  background-image: linear-gradient(to bottom, #28A745, #218838);
+  background-image: linear-gradient(to bottom, #123e85, #123e85);
   background-size: 100% 120px;
   background-repeat: no-repeat;
   margin: 40px auto;
@@ -81,10 +81,34 @@ header img {
   padding: 20px;
 }
 
-.mycard h1 {
+.balao h2 {
   text-align: center;
   color: #ffffff;
   margin: 20px 0 60px 0;
+}
+
+/* Responsividade */
+
+@media (max-width: 768px) {
+  .balao {
+      width: 80%; /* Ajusta a largura para 80% da tela em tablets */
+      padding: 15px; /* Reduz o padding para se ajustar melhor em telas menores */
+  }
+
+  .balao h2 {
+      margin: 42px 0 40px 0; /* Ajusta a margem para se adequar ao tamanho reduzido */
+  }
+}
+
+@media (max-width: 480px) {
+  .balao {
+      width: 90%; /* Ajusta a largura para 90% da tela em smartphones */
+      padding: 10px; /* Reduz ainda mais o padding para telas muito pequenas */
+  }
+
+  .balao h2 {
+      margin: 10px 0 30px 0; /* Ajusta a margem para se adequar ao tamanho reduzido */
+  }
 }
 
 ul {

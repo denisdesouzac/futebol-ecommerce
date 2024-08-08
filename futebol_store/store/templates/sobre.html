@@ -5,8 +5,171 @@
 {% endblock %}
 
 {% block conteudo %}
-    <div class="mycard">
-        <h1>Página em desenvolvimento</h1>
-        <p>Volte para <a href="/sobre">loja</a></p>
+    <div class="sobre">
+        <h1>Sobre</h1>
+        <img src="/media/carrossel2.jpg" class="d-block w-100" alt="Imagem 1">
     </div>
+    
+    <div class="balao">
+        <h2>Nossa História</h2>
+        <p>Bem-vindo à nossa jornada! Desde o início, buscamos oferecer mais do que apenas produtos; queremos proporcionar uma experiência de compra excepcional. Nossa missão é transformar cada visita em uma experiência única e memorável.</p>
+        <p>Nosso compromisso com a qualidade e o atendimento é inabalável. Trabalhamos com dedicação para garantir que cada item em nosso catálogo atenda aos mais altos padrões. Desde o momento em que você acessa nossa loja, até o instante em que recebe seu pedido, você pode contar com um serviço impecável e um suporte eficiente.</p>
+        <p>Nossa equipe é apaixonada por inovar e trazer as melhores tendências para você. Acreditamos que cada produto tem uma história e queremos compartilhar essa história com você, oferecendo não apenas itens de alta qualidade, mas também um atendimento personalizado que faz toda a diferença.</p>
+        <p>Estamos aqui para tornar suas compras mais fáceis e agradáveis. Navegue, descubra e aproveite o melhor que temos a oferecer. Obrigado por fazer parte da nossa história!</p>
+    </div>
+
+    <ul>
+        <li><a href="#"><i class="fab fa-facebook-f"></i></a></li>
+        <li><a href="#"><i class="fab fa-twitter"></i></a></li>
+        <li><a href="#"><i class="fab fa-whatsapp"></i></a></li>
+        <li><a href="#"><i class="fab fa-instagram"></i></a></li>
+    </ul>
+
+    <style>
+    /* Sobre */
+        .sobre {
+            position: relative;
+            width: 100%;
+            height: 250px;
+            overflow: hidden;
+            text-align: center;
+        }
+
+        .sobre img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .sobre::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5); /* Preto com 50% de opacidade */
+            z-index: 1; /* Coloca a camada sobre a imagem */
+        }
+
+        .sobre h1 {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: white;
+            margin: 0;
+            font-size: 3rem;
+            padding: 10px;
+            border-radius: 10px; /* Arredonda as bordas do fundo */
+            text-transform: uppercase; /* Converte o texto para maiúsculas */
+            z-index: 2; /* Garante que o texto fique acima da camada */
+        }
+
+        /* Lista com ícones */
+
+        ul {
+            display: flex;
+            justify-content: center;
+            margin: 20px 0;
+            padding: 0;
+            list-style: none;
+        }
+
+        ul li {
+            margin: 0 10px;
+        }
+
+        ul li a {
+            width: 80px;
+            height: 80px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: #fff;
+            text-decoration: none;
+            font-size: 30px;
+            border-radius: 50%;
+            color: #e2e2e2;
+            box-shadow: inset -1px -1px 2px rgba(0, 0, 0, 0.2), 2px 2px 5px rgba(0, 0, 0, 0.2);
+            transition: 0.5s;
+            position: relative; /* Ensure that the pseudo-element is positioned relative to the link */
+        }
+
+        ul li a:hover {
+            color: #999;
+            transform: translateY(-20px);
+            box-shadow: inset -1px -1px 2px rgba(0, 0, 0, 0.2), 2px 24px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        ul li a::before {
+            content: '';
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            right: 10px;
+            bottom: 10px;
+            border-radius: 50%;
+            border: 2px solid rgba(0, 0, 0, 0.1);
+            z-index: 0; /* Ensure the pseudo-element is behind the icon */
+        }
+
+        ul li a .fab {
+            color: #fff; /* Ensure the icon color is white */
+            position: relative;
+            z-index: 1; /* Ensure the icon is above the pseudo-element */
+        }
+
+        ul li:nth-child(1) a::before {
+            background: #1877f2;
+        }
+
+        ul li:nth-child(2) a::before {
+            background: #1da1f2;
+        }
+
+        ul li:nth-child(3) a::before {
+            background: #25d366;
+        }
+
+        ul li:nth-child(4) a::before {
+            background: #c32aa3;
+        }
+
+        ul li:nth-child(5) a::before {
+            background: #ea4c89;
+        }
+
+        /* Responsividade */
+
+        @media (max-width: 768px) {
+            .sobre h1 {
+                font-size: 2rem; /* Ajusta o tamanho da fonte do título em telas menores */
+            }
+
+            ul li a {
+                width: 60px; /* Ajusta o tamanho dos ícones em telas menores */
+                height: 60px;
+                font-size: 24px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .sobre h1 {
+                font-size: 1.5rem; /* Ajusta o tamanho da fonte do título em telas muito pequenas */
+                padding: 8px;
+            }
+
+            ul li a {
+                width: 50px; /* Ajusta ainda mais o tamanho dos ícones em telas muito pequenas */
+                height: 50px;
+                font-size: 20px;
+            }
+
+            ul li {
+                margin: 0 5px; /* Reduz a margem entre os ícones */
+            }
+        }
+
+    </style>
 {% endblock %}
