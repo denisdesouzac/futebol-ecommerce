@@ -16,6 +16,7 @@ def loja(request):
 
 def sobre(request):
     template = loader.get_template('sobre.html')
+<<<<<<< HEAD
     return HttpResponse(template.render())
 
 def login_view(request):
@@ -43,3 +44,6 @@ def signup_view(request):
 @login_required
 def home_view(request):
     return render(request, 'home.html')
+=======
+    return HttpResponse(template.render())
+>>>>>>> 974594a73e2a609c264dac001ed5dd74f7d80e97
