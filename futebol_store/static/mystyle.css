@@ -169,3 +169,58 @@ a:link, a:visited {
   color: #fe8100;
   text-decoration: none; /* Remove o sublinhado do link */
 }
+/* Estilo base para botões */
+.botao {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    color: #fff;
+    text-align: center;
+    cursor: pointer;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.botao.logar {
+    background-color: #007bff; /* Azul padrão */
+}
+
+.botao.cadastre-se {
+    background-color: #28a745; /* Verde para Cadastre-se */
+}
+
+.botao.logar:hover,
+.botao.cadastre-se:hover {
+    opacity: 0.8; /* Efeito de hover */
+}
+
+/* Estilos para os formulários de login e cadastro */
+form {
+  max-width: 400px;
+  margin: auto;
+  padding: 20px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background: #f9f9f9;
+}
+
+.form-group {
+  margin-bottom: 15px;
+}
+
+.form-control {
+  width: 100%;
+  padding: 10px;
+  border-radius: 4px;
+}
+
+.btn-primary {
+  background-color: #007bff;
+  border-color: #007bff;
+  color: #fff;
+}
+
+.btn-primary:hover {
+  background-color: #0056b3;
+  border-color: #004085;
+}

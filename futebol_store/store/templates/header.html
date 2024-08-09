@@ -9,8 +9,8 @@
     <header>
         <img src="/media/logo.jpg" alt="">
         <div class="botao-container">
-            <button class="botao logar">Logar</button>
-            <button class="botao cadastre-se">Cadastre-se</button>
+            <a href="{% url 'login' %}" class="botao logar">Logar</a>
+            <a href="{% url 'signup' %}" class="botao cadastre-se">Cadastre-se</a>
         </div>
     </header>
     {% block conteudo %}
