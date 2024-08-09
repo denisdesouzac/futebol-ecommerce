@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block titulo %}
+    Perfil do Usuário
+{% endblock %}
+
+{% block conteudo %}
+    <h1>Bem-vindo, {{ user.username }}!</h1>
+    <p>E-mail: {{ user.email }}</p>
+    
+    <h2>Editar Conta</h2>
+    <a href="{% url 'editar_conta' %}">Editar meus dados</a>
+    
+    <h2>Carrinho</h2>
+    <a href="{% url 'carrinho' %}">Ver meu carrinho</a>
+{% endblock %}

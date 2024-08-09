@@ -1,15 +1,14 @@
 {% extends "base.html" %}
 
 {% block titulo %}
-    Login
+    Editar Conta
 {% endblock %}
 
 {% block conteudo %}
-    <h2>Login</h2>
+    <h1>Editar Conta</h1>
     <form method="post">
         {% csrf_token %}
         {{ form.as_p }}
-        <button type="submit" class="btn-primary">Login</button>
+        <button type="submit">Salvar alterações</button>
     </form>
 {% endblock %}
-
