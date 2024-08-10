@@ -31,7 +31,8 @@
                 </tr>
             </tbody>
         </table>
-        <a href="{% url 'checkout' %}" class="btn btn-primary">Finalizar Compra</a>
+        {% comment %} {% url 'checkout' %} {% endcomment %}
+        <a href="" class="btn btn-primary">Finalizar Compra</a>
     {% else %}
         <p>Seu carrinho está vazio.</p>
     {% endif %}

@@ -38,6 +38,8 @@ class OrderItem(models.Model):
  
     def clean(self):
         # Verificar se há estoque suficiente antes de salvar
+        if self.product.quantity_in_stock is None:
+            raise ValidationError(f"Quantidade em estoque não pode ser None para o produto {self.product.name}.")
         if self.product.quantity_in_stock < self.quantity:
             raise ValidationError(f"Estoque insuficiente para o produto {self.product.name}. Apenas {self.product.quantity_in_stock} disponíveis.")
 
@@ -49,9 +51,6 @@ class OrderItem(models.Model):
         self.unit_price = self.product.price
         self.total_price = self.unit_price * self.quantity
 
-        # Subtrair a quantidade em estoque do produto
-        self.product.quantity_in_stock -= self.quantity
-        self.product.save()
 
         super().save(*args, **kwargs)
 

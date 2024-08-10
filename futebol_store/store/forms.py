@@ -35,39 +35,63 @@ class CustomUserCreationForm(UserCreationForm):
             'password_mismatch': 'As senhas não coincidem.',
         }
     )
-    first_name = forms.CharField(
-        label='Nome',
-        widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Nome'}),
-        required=True
-    )
-    last_name = forms.CharField(
-        label='Sobrenome',
-        widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Sobrenome'}),
-        required=True
-    )
-    endereco = forms.CharField(
+    address = forms.CharField(
         label='Endereço',
-        widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Endereço'}),
-        required=True
+        widget=forms.TextInput(attrs={
+            'class': 'form-control',
+            'placeholder': 'Seu endereço'
+        }),
+        max_length=255,
+        error_messages={
+            'required': 'O endereço é obrigatório.',
+        }
     )
-    telefone = forms.CharField(
+    phone = forms.CharField(
         label='Telefone',
-        widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Telefone'}),
-        required=True
+        widget=forms.TextInput(attrs={
+            'class': 'form-control',
+            'placeholder': 'Seu telefone'
+        }),
+        max_length=20,
+        error_messages={
+            'required': 'O telefone é obrigatório.',
+        }
     )
 
     class Meta:
         model = User
-        fields = ('username', 'email', 'password1', 'password2', 'first_name', 'last_name')
+        fields = ('username', 'email', 'first_name', 'last_name', 'password1', 'password2')
+        widgets = {
+            'username': forms.TextInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'Nome de usuário'
+            }),
+            'first_name': forms.TextInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'Nome'
+            }),
+            'last_name': forms.TextInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'Sobrenome'
+            }),
+            'password1': forms.PasswordInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'Senha'
+            }),
+            'password2': forms.PasswordInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'Confirme sua senha'
+            }),
+        }
 
     def save(self, commit=True):
         user = super().save(commit=False)
-        user.first_name = self.cleaned_data['first_name']
-        user.last_name = self.cleaned_data['last_name']
-        user.email = self.cleaned_data['email']
-        
         if commit:
             user.save()
-            Client.objects.create(user=user, endereco=self.cleaned_data['endereco'], telefone=self.cleaned_data['telefone'])
-        
+            # Cria o cliente associado ao usuário
+            Client.objects.create(
+                user=user,
+                address=self.cleaned_data['address'],
+                phone=self.cleaned_data['phone']
+            )
         return user

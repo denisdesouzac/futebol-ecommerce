@@ -13,7 +13,7 @@ class Product(models.Model):
     name = models.CharField(max_length=40)
     description = models.TextField(max_length=200)
     price = models.DecimalField(max_digits=10, decimal_places=2)  # Usando DecimalField para precisão de preços
-    quantity_in_stock = models.PositiveIntegerField()
+    quantity_in_stock = models.PositiveIntegerField(default=0)
     image = models.ImageField(upload_to='images/', null=True, blank=True)
     category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name='products')
 
