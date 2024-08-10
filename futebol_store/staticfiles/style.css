@@ -248,39 +248,3 @@ form {
   background-color: #0056b3;
   border-color: #004085;
 }
-/* Define a cor de fundo do cabeçalho e adiciona sombra */
-header {
-    background-color: #f8f9fa; /* Cor de fundo clara */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra sutil */
-}
-
-/* Estiliza o menu de navegação */
-.navbar {
-    padding: 10px 20px; /* Adiciona padding ao cabeçalho */
-}
-
-/* Estiliza o título do cabeçalho */
-.navbar-brand {
-    font-size: 1.5rem; /* Tamanho da fonte */
-    font-weight: bold; /* Fonte em negrito */
-    color: #007bff; /* Cor do texto */
-    text-transform: uppercase; /* Texto em maiúsculas */
-}
-
-/* Estiliza os itens de navegação */
-.navbar-nav .nav-item {
-    margin-right: 15px; /* Espaçamento entre os itens */
-}
-
-/* Estiliza os links do menu */
-.nav-link {
-    font-size: 1rem; /* Tamanho da fonte */
-    color: #343a40; /* Cor do texto */
-    transition: color 0.3s ease; /* Transição suave para a cor */
-}
-
-/* Estiliza os links quando o mouse passa sobre eles */
-.nav-link:hover {
-    color: #007bff; /* Cor ao passar o mouse */
-    text-decoration: underline; /* Sublinha o texto */
-}

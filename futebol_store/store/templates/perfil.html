@@ -5,73 +5,44 @@
 {% endblock %}
 
 {% block conteudo %}
-    <div class="container-fluid px-0 position-relative">
-        <!-- Imagem sobre o carrossel -->
-        <div class="overlay-image">
-            <img src="/media/suaLojaBrasileira.png" alt="Sua Loja Brasileira" class="overlay-img">
+    <div class="container mt-4">
+        <h1 class="mb-4">Bem-vindo, {{ user.username }}!</h1>
+        
+        <div class="card mb-4">
+            <div class="card-header">
+                <h2>Informações do Usuário</h2>
+            </div>
+            <div class="card-body">
+                <p><strong>E-mail:</strong> {{ user.email }}</p>
+                <a href="{% url 'editar_conta' %}" class="btn btn-primary">Editar meus dados</a>
+            </div>
+        </div>
+        
+        <div class="card mb-4">
+            <div class="card-header">
+                <h2>Carrinho</h2>
+            </div>
+            <div class="card-body">
+                <a href="{% url 'carrinho' %}" class="btn btn-primary">Ver meu carrinho</a>
+            </div>
         </div>
 
-        <!-- Carrossel -->
-        <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
-            <div class="carousel-indicators">
-                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
-                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
-                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
+        <div class="card mb-4">
+            <div class="card-header">
+                <h2>Meus Pedidos</h2>
             </div>
-            <div class="carousel-inner">
-                <div class="carousel-item active">
-                    <img src="/media/carrossel001.jpg" class="d-block w-100" alt="Imagem 1">
-                </div>
-                <div class="carousel-item">
-                    <img src="/media/carrossel2.jpg" class="d-block w-100" alt="Imagem 2">
-                </div>
-                <div class="carousel-item">
-                    <img src="/media/carrossel03.jpg" class="d-block w-100" alt="Imagem 3">
-                </div>
-            </div>
-            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
-                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                <span class="visually-hidden">Previous</span>
-            </button>
-            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
-                <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                <span class="visually-hidden">Next</span>
-            </button>
-        </div>
-
-        <!-- Botão Comprar -->
-        <div class="overlay-button">
-            <a href="{% url 'loja' %}" class="btn btn-primary">Comprar</a>
-        </div>
-    </div>
-
-    <!-- Contêiner para os flipcards -->
-    <div class="flipcard-container">
-        <div class="flipcard-wrapper">
-            <div class="flipcard flip1">
-                <div class="front"><img src="media/card/card1.svg" alt="Imagem 1"></div>
-                <div class="back">
-                    <h4>Desempenho e conforto para suas partidas.</h4>
-                    <a href="{% url 'loja' %}" class="btn-outline-custom">Comprar</a>
-                </div>
-            </div>
-        </div>
-        <div class="flipcard-wrapper">
-            <div class="flipcard flip2">
-                <div class="front"><img src="media/card/card2.svg" alt="Imagem 2"></div>
-                <div class="back">
-                    <h4>Estilo e conforto para torcer com paixão.</h4>
-                    <a href="{% url 'loja' %}" class="btn-outline-custom">Comprar</a>
-                </div>
-            </div>
-        </div>
-        <div class="flipcard-wrapper">
-            <div class="flipcard flip3">
-                <div class="front"><img src="media/card/card3.svg" alt="Imagem 3"></div>
-                <div class="back">
-                    <h4>Durabilidade e precisão em cada lance.</h4>
-                    <a href="{% url 'loja' %}" class="btn-outline-custom">Comprar</a>
-                </div>
+            <div class="card-body">
+                {% if orders %}
+                    <ul class="list-group">
+                        {% for order in orders %}
+                            <li class="list-group-item">
+                                <a href="{% url 'order_detail' order.id %}">Pedido {{ order.id }} - {{ order.status }}</a> ({{ order.order_date }})
+                            </li>
+                        {% endfor %}
+                    </ul>
+                {% else %}
+                    <p>Você ainda não fez nenhum pedido.</p>
+                {% endif %}
             </div>
         </div>
     </div>

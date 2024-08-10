@@ -5,14 +5,15 @@
 {% endblock %}
 
 {% block conteudo %}
-    <div class="container mt-5">
-        <div class="w-50 mx-auto">
-            <h2 class="text-center mb-4">Login</h2>
-            <form method="post">
-                {% csrf_token %}
-                {{ form.as_p }}
-                <button type="submit" class="btn btn-primary w-100">Login</button>
-            </form>
+    <h2>Login</h2>
+    {% if form.errors %}
+        <div class="alert alert-danger">
+            <p>Usuário ou senha inválidos. Tente novamente.</p>
         </div>
-    </div>
+    {% endif %}
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="btn-primary">Login</button>
+    </form>
 {% endblock %}
