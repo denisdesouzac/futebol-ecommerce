@@ -1,7 +1,7 @@
 ## Nomes: 
 - Denis de Souza
 - Luis Felipe Costa Teixeira
-- Ronald Galdino
+- Ronald de Souza Galdino
 
 # **Futebol Store**
 
