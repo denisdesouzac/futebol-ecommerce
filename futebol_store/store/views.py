@@ -30,7 +30,7 @@ def login_view(request):
         if form.is_valid():
             user = form.get_user()
             auth_login(request, user)
-            return redirect('home')  # Redireciona para a página inicial após o login
+            return redirect('perfil')  # Redireciona para a página perfil após o login
     else:
         form = AuthenticationForm()
     return render(request, 'login.html', {'form': form})
@@ -96,11 +96,11 @@ def signup_view(request):
         if form.is_valid():
             user = form.save()
             login(request, user)  # Faz login automático após o cadastro
-            return redirect('perfil')  # Redireciona para a página inicial ou outra página após o cadastro
+            return redirect('perfil')  # Redireciona para a página perfil após o cadastro
     else:
         form = CustomUserCreationForm()
-    
     return render(request, 'signup.html', {'form': form})
+
 
 def carrinho_view(request):
     # Lógica para recuperar itens do carrinho

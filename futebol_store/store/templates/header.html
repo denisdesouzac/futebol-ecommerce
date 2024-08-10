@@ -9,8 +9,18 @@
     <header>
         <img src="/media/logo.jpg" alt="">
         <div class="botao-container">
-            <a href="{% url 'login' %}" class="botao logar">Logar</a>
-            <a href="{% url 'signup' %}" class="botao cadastre-se">Cadastre-se</a>
+            {% if user.is_authenticated %}
+                <a href="{% url 'perfil' %}" class="botao">Perfil</a>
+                <a href="{% url 'editar_conta' %}" class="botao">Editar Conta</a>
+                <a href="{% url 'carrinho' %}" class="botao">Carrinho</a>
+                <form method="post" action="{% url 'logout' %}" style="display:inline;">
+                    {% csrf_token %}
+                    <button type="submit" class="botao">Logout</button>
+                </form>
+            {% else %}
+                <a href="{% url 'login' %}" class="botao logar">Logar</a>
+                <a href="{% url 'signup' %}" class="botao cadastre-se">Cadastre-se</a>
+            {% endif %}
         </div>
     </header>
     {% block conteudo %}

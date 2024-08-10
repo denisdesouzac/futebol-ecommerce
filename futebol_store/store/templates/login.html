@@ -5,11 +5,14 @@
 {% endblock %}
 
 {% block conteudo %}
-    <h2>Login</h2>
-    <form method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit" class="btn-primary">Login</button>
-    </form>
+    <div class="container mt-5">
+        <div class="w-50 mx-auto">
+            <h2 class="text-center mb-4">Login</h2>
+            <form method="post">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <button type="submit" class="btn btn-primary w-100">Login</button>
+            </form>
+        </div>
+    </div>
 {% endblock %}
-
