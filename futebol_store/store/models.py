@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 from catalog.models import Product
+from django.core.exceptions import ValidationError
 
 # Representa os clientes e administradores.
 class Client(models.Model):
@@ -34,11 +35,32 @@ class OrderItem(models.Model):
     quantity = models.PositiveIntegerField()
     unit_price = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
     total_price = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
+ 
+    def clean(self):
+        # Verificar se há estoque suficiente antes de salvar
+        if self.product.quantity_in_stock < self.quantity:
+            raise ValidationError(f"Estoque insuficiente para o produto {self.product.name}. Apenas {self.product.quantity_in_stock} disponíveis.")
 
     def save(self, *args, **kwargs):
+        # Chama o método clean para garantir que a validação seja aplicada
+        self.clean()
+
+        # Atualizar o preço unitário e total
         self.unit_price = self.product.price
         self.total_price = self.unit_price * self.quantity
+
+        # Subtrair a quantidade em estoque do produto
+        self.product.quantity_in_stock -= self.quantity
+        self.product.save()
+
         super().save(*args, **kwargs)
+
+    def delete(self, *args, **kwargs):
+        # Quando um OrderItem é deletado, o estoque deve ser reposto
+        self.product.quantity_in_stock += self.quantity
+        self.product.save()
+
+        super().delete(*args, **kwargs)
 
     def __str__(self):
         return f"{self.quantity} x {self.product.name} in Order {self.order.id}"
