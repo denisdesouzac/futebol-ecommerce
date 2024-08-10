@@ -41,6 +41,15 @@ header img {
   background-color: #45a049;
 }
 
+.deslogar {
+  background-color: #c01e1e;
+  color: white;
+}
+
+.deslogar:hover {
+  background-color: #a01212;
+}
+
 .cadastre-se {
   background-color: #123e85;
   color: white;
@@ -115,10 +124,6 @@ ul {
   list-style-type: none;
   padding: 0;
   margin: 0;
-}
-
-a:link, a:visited {
-  color: #123d85;
 }
 
 .main, .main h1 {

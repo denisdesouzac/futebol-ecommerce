@@ -9,8 +9,14 @@
     <header>
         <img src="/media/logo.jpg" alt="">
         <div class="botao-container">
+            {% if user.is_authenticated %}
+                <a href="{% url 'perfil' %}" class="botao logar">Perfil</a>
+                <a href="{% url 'logout' %}" class="botao deslogar">Deslogar</a>
+            {% else %}
             <a href="{% url 'login' %}" class="botao logar">Logar</a>
             <a href="{% url 'signup' %}" class="botao cadastre-se">Cadastre-se</a>
+            {% endif %}
+            
         </div>
     </header>
     {% block conteudo %}
