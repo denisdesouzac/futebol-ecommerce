@@ -19,6 +19,7 @@ def custom_logout(request):
 
 def loja(request):
     products = Product.objects.all()  # Recupera todos os produtos do banco de dados
+    print("Produtos carregados:", products)  # Adicione esta linha para debug
     return render(request, 'loja.html', {'products': products})
 
 def product_detail(request, id):
