@@ -25,3 +25,32 @@
         </div>
     </div>
 {% endblock %}
+
+
+{% comment %} {% extends "base.html" %}
+
+{% block titulo %}
+    {{ product.name }}
+{% endblock %}
+
+{% block conteudo %}
+    <div class="row">
+        <div class="col-md-6">
+            <img src="{{ product.image.url }}" alt="{{ product.name }}" class="img-fluid">
+        </div>
+        <div class="col-md-6">
+            <h2>{{ product.name }}</h2>
+            <p>{{ product.description }}</p>
+            <p>Preço: R$ {{ product.price }}</p>
+            <p>Em estoque: {{ product.quantity_in_stock }}</p>
+            <form method="post" action="{% url 'add_to_cart' product.id %}">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label for="quantity">Quantidade:</label>
+                    <input type="number" id="quantity" name="quantity" min="1" max="{{ product.quantity_in_stock }}" class="form-control">
+                </div>
+                <button type="submit" class="btn btn-success">Adicionar ao Carrinho</button>
+            </form>
+        </div>
+    </div>
+{% endblock %} {% endcomment %}

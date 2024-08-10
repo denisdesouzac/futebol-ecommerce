@@ -26,6 +26,13 @@ def product_detail(request, id):
     product = get_object_or_404(Product, id=id)
     return render(request, 'product_detail.html', {'product': product})
 
+def add_to_cart(request, product_id):
+    product = get_object_or_404(Product, id=product_id)
+    # Lógica para adicionar o produto ao carrinho
+    # Por exemplo, você pode adicionar o produto a um objeto de Carrinho na sessão
+
+    return redirect('carrinho')
+
 def principal(request):
     return render(request, 'principal.html')
 
