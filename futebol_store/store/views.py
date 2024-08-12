@@ -136,7 +136,14 @@ def home_view(request):
 def order_detail(request, id):
     order = get_object_or_404(Order, id=id, client=request.user.client)
 
-    return render(request, 'order_detail.html', {'order': order})
+    # Verifica se a ordem ainda está ativa
+    if order.status == 'pending':
+        return render(request, 'order_detail.html', {'order': order})
+    else:
+        # Redireciona para uma página adequada se o pedido não estiver mais ativo
+        messages.info(request, "O pedido não está mais ativo.")
+        return redirect("perfil")
+
 
 def order_summary(request):
     # Recupera o pedido mais recente do usuário logado
@@ -148,7 +155,6 @@ def order_summary(request):
     else:
         return render(request, 'order_summary.html', {'message': 'You need to log in to view this page.'})
     
-@login_required
 @login_required
 def add_to_cart(request, product_id):
     # Obtém o produto com base no id fornecido
@@ -206,25 +212,29 @@ def add_to_cart(request, product_id):
 
     return redirect("order-summary")
 
+
 @login_required
 def remove_from_cart(request, product_id):
-    # Recupera o produto com base no id
+    # Recupera o produto com base no ID
     product = get_object_or_404(Product, id=product_id)
-
+    
     # Obtém a ordem não finalizada do usuário
-    order_qs = Order.objects.filter(client=request.user.client, ordered=False)
+    order_qs = Order.objects.filter(client=request.user.client, status='pending')
     if order_qs.exists():
         order = order_qs[0]
-
+        
         # Verifica se o item está no carrinho
         if order.order_items.filter(product=product).exists():
             order_item = OrderItem.objects.filter(
                 product=product,
                 order=order
             ).first()
-
+            
             if order_item:
                 order_item.delete()  # Remove o item do carrinho
+                # Verifica se o pedido está vazio
+                if not order.order_items.exists():
+                    order.delete()  # Remove o pedido se estiver vazio
                 messages.info(request, "Produto removido do carrinho.")
             else:
                 messages.info(request, "Produto não encontrado no carrinho.")
@@ -232,5 +242,5 @@ def remove_from_cart(request, product_id):
             messages.info(request, "Produto não está no seu carrinho.")
     else:
         messages.info(request, "Você não tem um pedido ativo.")
-
-    return redirect("order-summary")
+    
+    return redirect("carrinho")
