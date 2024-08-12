@@ -112,3 +112,55 @@ class CustomUserCreationForm(UserCreationForm):
                 phone=self.cleaned_data['phone']
             )
         return user
+    from django import forms
+from django.contrib.auth.models import User
+
+class EditAccountForm(forms.ModelForm):
+    first_name = forms.CharField(
+        label='Nome',
+        widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Seu nome'}),
+        required=True,
+        error_messages={
+            'required': 'O nome é obrigatório.',
+        }
+    )
+    email = forms.EmailField(
+        label='E-mail',
+        widget=forms.EmailInput(attrs={'class': 'form-control', 'placeholder': 'Seu e-mail'}),
+        error_messages={
+            'required': 'O e-mail é obrigatório.',
+            'invalid': 'Digite um e-mail válido.',
+        }
+    )
+    password1 = forms.CharField(
+        label='Nova senha',
+        widget=forms.PasswordInput(attrs={'class': 'form-control', 'placeholder': 'Senha'}),
+        required=False,
+    )
+    password2 = forms.CharField(
+        label='Confirme sua nova senha',
+        widget=forms.PasswordInput(attrs={'class': 'form-control', 'placeholder': 'Confirme sua senha'}),
+        required=False,
+    )
+
+    class Meta:
+        model = User
+        fields = ('first_name', 'email', 'password1', 'password2')
+
+    def clean(self):
+        cleaned_data = super().clean()
+        password1 = cleaned_data.get("password1")
+        password2 = cleaned_data.get("password2")
+
+        if password1 and password1 != password2:
+            self.add_error('password2', 'As senhas não coincidem.')
+
+        return cleaned_data
+
+    def save(self, commit=True):
+        user = super().save(commit=False)
+        if self.cleaned_data['password1']:
+            user.set_password(self.cleaned_data['password1'])
+        if commit:
+            user.save()
+        return user

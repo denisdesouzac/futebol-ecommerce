@@ -10,6 +10,7 @@
         <img src="/media/logo.jpg" alt="">
         <div class="botao-container">
             {% if user.is_authenticated %}
+                <span class="nome-usuario">Olá, {{ user.first_name }}!</span>
                 <a href="{% url 'perfil' %}" class="botao logar">Perfil</a>
                 <a href="{% url 'logout' %}" class="botao deslogar">Deslogar</a>
             {% else %}

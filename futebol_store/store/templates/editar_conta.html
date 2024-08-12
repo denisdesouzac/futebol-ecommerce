@@ -5,10 +5,16 @@
 {% endblock %}
 
 {% block conteudo %}
-    <h1>Editar Conta</h1>
-    <form method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Salvar alterações</button>
-    </form>
+<div class="container d-flex justify-content-center align-items-center" style="min-height: 80vh;">
+    <div class="col-md-6">
+        <h1 class="text-center mb-4">Editar Conta</h1>
+        <form method="post" class="form-container">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <div class="text-center">
+                <button type="submit" class="btn btn-primary">Salvar alterações</button>
+            </div>
+        </form>
+    </div>
+</div>
 {% endblock %}

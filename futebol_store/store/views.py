@@ -10,6 +10,8 @@ from .models import Product, Order, OrderItem, Payment, Client
 from django.contrib.auth import logout
 from .forms import PaymentForm  # Vamos criar este formulário a seguir
 from django.utils import timezone
+from .forms import EditAccountForm
+from django.contrib.auth import update_session_auth_hash
 
 @login_required
 def checkout(request):
@@ -89,23 +91,28 @@ def signup_view(request):
 #     return render(request, 'perfil.html')
 @login_required
 def perfil_view(request):
-    client = request.user.client  # Assumindo que o usuário está relacionado ao cliente
-    orders = Order.objects.filter(client=client)
-
+    user = request.user
+    orders = Order.objects.filter(client=user.client)  
+    
     return render(request, 'perfil.html', {
-        'user': request.user,
+        'user': user,
         'orders': orders
     })
 
 @login_required
-def editar_conta_view(request):
+def editar_conta(request):
     if request.method == 'POST':
-        form = UserChangeForm(request.POST, instance=request.user)
+        form = EditAccountForm(request.POST, instance=request.user)
         if form.is_valid():
-            form.save()
-            return redirect('perfil')
+            user = form.save()
+            if form.cleaned_data['password1']:
+                # Atualiza a sessão para que o usuário continue logado após a mudança da senha
+                update_session_auth_hash(request, user)
+            messages.success(request, 'Suas informações foram atualizadas com sucesso.')
+            return redirect('editar_conta')  # Redireciona para a mesma página
     else:
-        form = UserChangeForm(instance=request.user)
+        form = EditAccountForm(instance=request.user)
+
     return render(request, 'editar_conta.html', {'form': form})
 
 @login_required
