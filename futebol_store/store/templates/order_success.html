@@ -1,0 +1,13 @@
+
+
+{% extends "base.html" %}
+
+{% block titulo %}
+    Pedido Realizado com Sucesso
+{% endblock %}
+
+{% block conteudo %}
+    <h2>Obrigado pela sua compra!</h2>
+    <p>Seu pedido foi processado com sucesso. </p>
+    <a href="{% url 'loja' %}" class="btn btn-primary">Continuar Comprando</a>
+{% endblock %}

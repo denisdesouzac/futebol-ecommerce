@@ -5,12 +5,40 @@ from django.contrib.auth.forms import AuthenticationForm, UserChangeForm
 from .forms import CustomUserCreationForm  # Importar o formulário do arquivo forms.py
 from django.http import HttpResponseBadRequest
 from django.shortcuts import render, get_object_or_404
-from .models import Product, Order, OrderItem
+from .models import Product, Order, OrderItem, Payment
 from django.contrib.auth import logout
+from .forms import PaymentForm  # Vamos criar este formulário a seguir
 
-# def custom_logout(request):
-#     logout(request)
-#     return redirect('home')
+@login_required
+def checkout(request):
+    order = get_object_or_404(Order, client=request.user.client, status='pending')
+
+    if request.method == 'POST':
+        form = PaymentForm(request.POST)
+        if form.is_valid():
+            payment = form.save(commit=False)
+            payment.order = order
+            payment.save()
+
+            # Atualiza o status do pedido para "shipped" ou conforme a lógica da sua aplicação
+            order.status = 'shipped'
+            order.save()
+
+            return redirect('order_success')  # Redireciona para uma página de sucesso
+        else:
+            return HttpResponseBadRequest("Formulário de pagamento inválido.")
+    else:
+        form = PaymentForm()
+
+    cart_items = order.order_items.all()
+    cart_total = sum(item.total_price for item in cart_items)
+
+    return render(request, 'checkout.html', {
+        'form': form,
+        'order': order,
+        'cart_items': cart_items,
+        'cart_total': cart_total,
+    })
 
 def custom_logout(request):
     logout(request)
@@ -89,9 +117,18 @@ def signup_view(request):
     
     return render(request, 'cadastro.html', {'form': form})
 
+# @login_required
+# def perfil_view(request):
+#     return render(request, 'perfil.html')
 @login_required
 def perfil_view(request):
-    return render(request, 'perfil.html')
+    client = request.user.client  # Assumindo que o usuário está relacionado ao cliente
+    orders = Order.objects.filter(client=client)
+
+    return render(request, 'perfil.html', {
+        'user': request.user,
+        'orders': orders
+    })
 
 @login_required
 def editar_conta_view(request):
@@ -121,3 +158,8 @@ def cart_view(request):
 
 def home_view(request):
     return render(request, 'home.html')
+
+def order_detail(request, id):
+    order = get_object_or_404(Order, id=id, client=request.user.client)
+
+    return render(request, 'order_detail.html', {'order': order})

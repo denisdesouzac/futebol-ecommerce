@@ -24,6 +24,9 @@ class Order(models.Model):
         if not self.delivery_address:
             self.delivery_address = self.client.address  # Assumindo que o modelo Client possui um campo `address`
         super().save(*args, **kwargs)
+        
+    def get_total_price(self):
+        return sum(item.total_price for item in self.order_items.all())
 
     def __str__(self):
         return f"Order {self.id} by {self.client.user.username}"

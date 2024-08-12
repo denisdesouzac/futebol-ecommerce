@@ -1,12 +1,16 @@
 {% extends "base.html" %}
 
 {% block titulo %}
-    Meu Carrinho
+    Detalhes do Pedido
 {% endblock %}
 
 {% block conteudo %}
-    <h2>Meu Carrinho</h2>
-    {% if cart_items %}
+    <div class="container mt-4">
+        <h1>Detalhes do Pedido #{{ order.id }}</h1>
+        <p><strong>Data do Pedido:</strong> {{ order.order_date|date:"d/m/Y H:i" }}</p>
+        <p><strong>Status:</strong> {{ order.get_status_display }}</p>
+
+        <h2>Itens do Pedido</h2>
         <table class="table">
             <thead>
                 <tr>
@@ -17,7 +21,7 @@
                 </tr>
             </thead>
             <tbody>
-                {% for item in cart_items %}
+                {% for item in order.order_items.all %}
                     <tr>
                         <td>{{ item.product.name }}</td>
                         <td>{{ item.quantity }}</td>
@@ -26,14 +30,12 @@
                     </tr>
                 {% endfor %}
                 <tr>
-                    <td colspan="3"><strong>Total do Carrinho:</strong></td>
-                    <td><strong>R$ {{ cart_total }}</strong></td>
+                    <td colspan="3"><strong>Total do Pedido:</strong></td>
+                    <td><strong>R$ {{ order.get_total_price }}</strong></td>
                 </tr>
             </tbody>
         </table>
-        {% comment %} {% url 'checkout' %} {% endcomment %}
-        <a href="{% url 'checkout' %}" class="btn btn-primary">Finalizar Compra</a>
-    {% else %}
-        <p>Seu carrinho está vazio.</p>
-    {% endif %}
+
+        <a href="{% url 'perfil' %}" class="btn btn-primary">Voltar ao Perfil</a>
+    </div>
 {% endblock %}

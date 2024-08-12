@@ -1,12 +1,19 @@
 {% extends "base.html" %}
 
 {% block titulo %}
-    Meu Carrinho
+    Checkout
 {% endblock %}
 
 {% block conteudo %}
-    <h2>Meu Carrinho</h2>
-    {% if cart_items %}
+    <h2>Checkout</h2>
+    <form method="post">
+        {% csrf_token %}
+        <div class="form-group">
+            {{ form.payment_method.label_tag }}
+            {{ form.payment_method }}
+            {{ form.payment_method.errors }}
+        </div>
+        <h3>Resumo do Pedido</h3>
         <table class="table">
             <thead>
                 <tr>
@@ -26,14 +33,11 @@
                     </tr>
                 {% endfor %}
                 <tr>
-                    <td colspan="3"><strong>Total do Carrinho:</strong></td>
+                    <td colspan="3"><strong>Total do Pedido:</strong></td>
                     <td><strong>R$ {{ cart_total }}</strong></td>
                 </tr>
             </tbody>
         </table>
-        {% comment %} {% url 'checkout' %} {% endcomment %}
-        <a href="{% url 'checkout' %}" class="btn btn-primary">Finalizar Compra</a>
-    {% else %}
-        <p>Seu carrinho está vazio.</p>
-    {% endif %}
+        <button type="submit" class="btn btn-success">Finalizar Pagamento</button>
+    </form>
 {% endblock %}

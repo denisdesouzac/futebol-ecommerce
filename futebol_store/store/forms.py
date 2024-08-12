@@ -2,6 +2,23 @@ from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from .models import Client
+from .models import Payment
+
+class PaymentForm(forms.ModelForm):
+    class Meta:
+        model = Payment
+        fields = ['payment_method']
+        widgets = {
+            'payment_method': forms.Select(attrs={'class': 'form-control'}),
+        }
+        labels = {
+            'payment_method': 'Método de Pagamento',
+        }
+        error_messages = {
+            'payment_method': {
+                'required': 'Por favor, selecione um método de pagamento.',
+            }
+        }
 
 class CustomUserCreationForm(UserCreationForm):
     username = forms.CharField(
