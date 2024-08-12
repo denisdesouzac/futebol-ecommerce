@@ -149,10 +149,11 @@ def order_summary(request):
         return render(request, 'order_summary.html', {'message': 'You need to log in to view this page.'})
     
 @login_required
-def add_to_cart(request, slug):
-    # Obtém o produto com base no slug fornecido
-    product = get_object_or_404(Product, slug=slug)
-    
+@login_required
+def add_to_cart(request, product_id):
+    # Obtém o produto com base no id fornecido
+    product = get_object_or_404(Product, id=product_id)
+
     # Obtém a quantidade fornecida na requisição GET, padrão é 1 se não fornecido
     quantity = request.GET.get('quantity', 1)
     try:
@@ -161,28 +162,28 @@ def add_to_cart(request, slug):
             quantity = 1
     except (ValueError, TypeError):
         quantity = 1
-    
+
     # Obtém ou cria um pedido para o cliente
-    order_qs = Order.objects.filter(client=request.user.client, ordered=False)
+    order_qs = Order.objects.filter(client=request.user.client, status='pending')
     if order_qs.exists():
         order = order_qs[0]
     else:
         ordered_date = timezone.now()
-        order = Order.objects.create(client=request.user.client, ordered_date=ordered_date)
-    
+        order = Order.objects.create(client=request.user.client, order_date=ordered_date, status='pending')
+
     # Obtém ou cria um item de pedido para o produto
     order_item, created = OrderItem.objects.get_or_create(
         product=product,
         order=order,
         defaults={'quantity': quantity}
     )
-    
+
     # Atualiza a quantidade do item do pedido
     if not created:
         if order_item.quantity + quantity > product.quantity_in_stock:
             messages.warning(request, "Quantidade solicitada excede o estoque disponível.")
             return redirect("order-summary")
-        
+
         order_item.quantity += quantity
         order_item.save()
         messages.info(request, "Quantidade do item foi atualizada.")
@@ -190,41 +191,39 @@ def add_to_cart(request, slug):
         if quantity > product.quantity_in_stock:
             messages.warning(request, "Quantidade solicitada excede o estoque disponível.")
             return redirect("order-summary")
-        
+
         order_item.quantity = quantity
         order_item.save()
         messages.info(request, "Item adicionado ao carrinho.")
-    
+
     # Atualiza o estoque do produto
     product.quantity_in_stock -= quantity
     product.save()
-    
+
     # Adiciona o item ao pedido se ainda não estiver
     if not order.order_items.filter(product=product).exists():
         order.order_items.add(order_item)
-    
+
     return redirect("order-summary")
 
 @login_required
-def remove_from_cart(request, slug):
-    # Recupera o produto com base no slug
-    product = get_object_or_404(Product, slug=slug)
-    
+def remove_from_cart(request, product_id):
+    # Recupera o produto com base no id
+    product = get_object_or_404(Product, id=product_id)
+
     # Obtém a ordem não finalizada do usuário
-    order_qs = Order.objects.filter(user=request.user, ordered=False)
+    order_qs = Order.objects.filter(client=request.user.client, ordered=False)
     if order_qs.exists():
         order = order_qs[0]
-        
+
         # Verifica se o item está no carrinho
-        if order.items.filter(product__slug=product.slug).exists():
+        if order.order_items.filter(product=product).exists():
             order_item = OrderItem.objects.filter(
                 product=product,
-                user=request.user,
-                ordered=False
+                order=order
             ).first()
-            
+
             if order_item:
-                order.items.remove(order_item)
                 order_item.delete()  # Remove o item do carrinho
                 messages.info(request, "Produto removido do carrinho.")
             else:
@@ -233,5 +232,5 @@ def remove_from_cart(request, slug):
             messages.info(request, "Produto não está no seu carrinho.")
     else:
         messages.info(request, "Você não tem um pedido ativo.")
-    
+
     return redirect("order-summary")
