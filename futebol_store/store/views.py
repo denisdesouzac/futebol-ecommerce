@@ -163,3 +163,13 @@ def order_detail(request, id):
     order = get_object_or_404(Order, id=id, client=request.user.client)
 
     return render(request, 'order_detail.html', {'order': order})
+
+def order_summary(request):
+    # Recupera o pedido mais recente do usuário logado
+    if request.user.is_authenticated:
+        order = Order.objects.filter(client__user=request.user).order_by('-order_date').first()
+        if not order:
+            return render(request, 'order_summary.html', {'message': 'No orders found.'})
+        return render(request, 'order_summary.html', {'order': order})
+    else:
+        return render(request, 'order_summary.html', {'message': 'You need to log in to view this page.'})

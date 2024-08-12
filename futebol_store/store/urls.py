@@ -1,8 +1,7 @@
 from django.urls import path
 from . import views
 from django.contrib.auth import views as auth_views
-from django.views.generic import TemplateView 
-
+from django.views.generic import TemplateView
 
 urlpatterns = [
     path('', views.principal, name='home'),
@@ -19,6 +18,6 @@ urlpatterns = [
     path('checkout/', views.checkout, name='checkout'),
     path('order_success/', TemplateView.as_view(template_name="order_success.html"), name='order_success'),
     path('pedido/<int:id>/', views.order_detail, name='order_detail'),
-
-    
+    path('order-summary/', views.order_summary, name='order-summary'),
 ]
+

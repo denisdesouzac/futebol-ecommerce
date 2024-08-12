@@ -35,9 +35,13 @@ class Order(models.Model):
 class OrderItem(models.Model):
     order = models.ForeignKey(Order, on_delete=models.CASCADE, related_name='order_items')
     product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='order_items')
-    quantity = models.PositiveIntegerField()
+    quantity = models.IntegerField(default=1)
     unit_price = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
     total_price = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
+
+    def get_total_item_price(self):
+        return self.quantity * self.product.price
+
  
     def clean(self):
         # Verificar se há estoque suficiente antes de salvar
@@ -65,7 +69,7 @@ class OrderItem(models.Model):
         super().delete(*args, **kwargs)
 
     def __str__(self):
-        return f"{self.quantity} x {self.product.name} in Order {self.order.id}"
+        return f"{self.quantity} of {self.product.name}"
 
 # Representa as informações de pagamento dos pedidos.
 class Payment(models.Model):

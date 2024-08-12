@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block conteudo %}
+
+<div class="container">
+  <div class="row">
+    <div class="col-lg-12">
+      <h2>Resumo do Pedido</h2>
+      <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Nome do Produto</th>
+            <th scope="col">Preço Unitário</th>
+            <th scope="col">Qtd</th>
+            <th scope="col">Preço Total</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for order_item in order.order_items.all %}
+          <tr>
+            <th scope="row">{{ forloop.counter }}</th>
+            <td>
+              {% if order_item.product.image %}
+                <img src="{{ order_item.product.image.url }}" style="width: 130px;">
+              {% else %}
+                No Image
+              {% endif %}
+              {{ order_item.product.name }}
+            </td>
+            <td>R$ {{ order_item.unit_price }}</td>
+            <td>{{ order_item.quantity }}</td>
+            <td>R$ {{ order_item.total_price }}</td>
+          </tr>
+          {% empty %}
+          <tr>
+            <td colspan="5">Nenhum item no pedido</td>
+          </tr>
+          {% endfor %}
+          <tr>
+            <td colspan="4"><b>Total do Pedido:</b></td>
+            <td>R$ {{ order.get_total_price }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+{% endblock conteudo %}
+
