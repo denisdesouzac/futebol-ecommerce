@@ -210,7 +210,7 @@ def add_to_cart(request, product_id):
     if not order.order_items.filter(product=product).exists():
         order.order_items.add(order_item)
 
-    return redirect("order-summary")
+    return redirect("carrinho")
 
 
 @login_required
