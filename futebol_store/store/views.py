@@ -136,13 +136,8 @@ def home_view(request):
 def order_detail(request, id):
     order = get_object_or_404(Order, id=id, client=request.user.client)
 
-    # Verifica se a ordem ainda está ativa
-    if order.status == 'pending':
-        return render(request, 'order_detail.html', {'order': order})
-    else:
-        # Redireciona para uma página adequada se o pedido não estiver mais ativo
-        messages.info(request, "O pedido não está mais ativo.")
-        return redirect("perfil")
+    # Renderiza a página de detalhes do pedido para todos os status
+    return render(request, 'order_detail.html', {'order': order})
 
 
 def order_summary(request):
