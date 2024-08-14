@@ -1,5 +1,3 @@
-
-
 {% extends "base.html" %}
 
 {% block titulo %}
@@ -7,7 +5,55 @@
 {% endblock %}
 
 {% block conteudo %}
-    <h2>Obrigado pela sua compra!</h2>
-    <p>Seu pedido foi processado com sucesso. </p>
-    <a href="{% url 'loja' %}" class="btn btn-primary">Continuar Comprando</a>
+    <style>
+        /* Estilos para a tela de confirmação de pedido */
+        .confirmation-container {
+            max-width: 600px;
+            margin: auto;
+            padding: 40px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            background-color: #ffffff;
+            text-align: center;
+        }
+
+        .confirmation-container h2 {
+            font-size: 2.5em;
+            margin-bottom: 20px;
+            color: #28a745; /* Cor verde para sucesso */
+        }
+
+        .confirmation-container p {
+            font-size: 1.2em;
+            margin-bottom: 30px;
+            color: #333;
+        }
+
+        .confirmation-container .btn-primary {
+            display: inline-block;
+            padding: 12px 24px;
+            font-size: 1.1em;
+            color: #ffffff;
+            background-color: #007bff; /* Azul padrão do Bootstrap */
+            border: none;
+            border-radius: 5px;
+            text-decoration: none;
+            transition: background-color 0.3s ease;
+        }
+
+        .confirmation-container .btn-primary:hover {
+            background-color: #0056b3; /* Azul escuro no hover */
+        }
+
+        .confirmation-container .btn-primary:focus {
+            outline: none;
+            box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.5);
+        }
+    </style>
+
+    <div class="confirmation-container">
+        <h2>Obrigado pela sua compra!</h2>
+        <p>Seu pedido foi processado com sucesso.</p>
+        <a href="{% url 'loja' %}" class="btn-primary">Continuar Comprando</a>
+    </div>
 {% endblock %}
