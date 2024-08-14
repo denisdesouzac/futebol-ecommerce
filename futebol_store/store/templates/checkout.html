@@ -5,39 +5,136 @@
 {% endblock %}
 
 {% block conteudo %}
-    <h2>Checkout</h2>
-    <form method="post">
-        {% csrf_token %}
-        <div class="form-group">
-            {{ form.payment_method.label_tag }}
-            {{ form.payment_method }}
-            {{ form.payment_method.errors }}
-        </div>
-        <h3>Resumo do Pedido</h3>
-        <table class="table">
-            <thead>
-                <tr>
-                    <th>Produto</th>
-                    <th>Quantidade</th>
-                    <th>Preço Unitário</th>
-                    <th>Total</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for item in cart_items %}
+    <style>
+        /* Estilos para a tela de checkout */
+        .checkout-container {
+            max-width: 800px;
+            margin: auto;
+            padding: 40px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            background-color: #ffffff;
+        }
+
+        .checkout-container h2 {
+            font-size: 2.5em;
+            margin-bottom: 30px;
+            color: #333;
+            text-align: center;
+        }
+
+        .checkout-container .form-group {
+            margin-bottom: 20px;
+        }
+
+        .checkout-container .form-group label {
+            display: block;
+            font-size: 1em;
+            margin-bottom: 5px;
+            color: #333;
+        }
+
+        .checkout-container .form-group select {
+            width: 100%;
+            padding: 12px;
+            font-size: 1em;
+            border: 1px solid #ced4da;
+            border-radius: 5px;
+            box-shadow: inset 0 1px 2px rgba(0,0,0,.1);
+        }
+
+        .checkout-container .form-group select:focus {
+            border-color: #007bff;
+            outline: none;
+            box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.5);
+        }
+
+        .checkout-container table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 30px;
+        }
+
+        .checkout-container table th,
+        .checkout-container table td {
+            padding: 12px;
+            text-align: left;
+            border: 1px solid #dee2e6;
+        }
+
+        .checkout-container table th {
+            background-color: #f8f9fa;
+            color: #495057;
+        }
+
+        .checkout-container table td {
+            color: #333;
+        }
+
+        .checkout-container table tr:last-child td {
+            font-weight: bold;
+        }
+
+        .checkout-container button {
+            width: 100%;
+            height: 50px;
+            font-size: 1.1em;
+            padding: 0 20px;
+            border-radius: 5px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .checkout-container button:hover {
+            background-color: #218838;
+        }
+
+        .checkout-container button:focus {
+            outline: none;
+            box-shadow: 0 0 0 2px rgba(40, 167, 69, 0.5);
+        }
+    </style>
+
+    <div class="checkout-container">
+        <h2>Checkout</h2>
+        <form method="post">
+            {% csrf_token %}
+            <div class="form-group">
+                {{ form.payment_method.label_tag }}
+                {{ form.payment_method }}
+                <div class="form-errors">
+                    {{ form.payment_method.errors }}
+                </div>
+            </div>
+            <h3>Resumo do Pedido</h3>
+            <table class="table">
+                <thead>
                     <tr>
-                        <td>{{ item.product.name }}</td>
-                        <td>{{ item.quantity }}</td>
-                        <td>R$ {{ item.unit_price }}</td>
-                        <td>R$ {{ item.total_price }}</td>
+                        <th>Produto</th>
+                        <th>Quantidade</th>
+                        <th>Preço Unitário</th>
+                        <th>Total</th>
                     </tr>
-                {% endfor %}
-                <tr>
-                    <td colspan="3"><strong>Total do Pedido:</strong></td>
-                    <td><strong>R$ {{ cart_total }}</strong></td>
-                </tr>
-            </tbody>
-        </table>
-        <button type="submit" class="btn btn-success">Finalizar Pagamento</button>
-    </form>
+                </thead>
+                <tbody>
+                    {% for item in cart_items %}
+                        <tr>
+                            <td>{{ item.product.name }}</td>
+                            <td>{{ item.quantity }}</td>
+                            <td>R$ {{ item.unit_price }}</td>
+                            <td>R$ {{ item.total_price }}</td>
+                        </tr>
+                    {% endfor %}
+                    <tr>
+                        <td colspan="3"><strong>Total do Pedido:</strong></td>
+                        <td><strong>R$ {{ cart_total }}</strong></td>
+                    </tr>
+                </tbody>
+            </table>
+            <button type="submit" class="btn btn-success">Finalizar Pagamento</button>
+        </form>
+    </div>
 {% endblock %}

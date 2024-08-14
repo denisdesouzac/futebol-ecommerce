@@ -5,8 +5,51 @@
 {% endblock %}
 
 {% block conteudo %}
-    <div class="container mt-4">
-        <h1 class="mb-4">Logout</h1>
+    <style>
+        /* Estilos para a tela de logout */
+        .logout-container {
+            text-align: center;
+            padding: 40px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            background-color: #f8f9fa;
+        }
+
+        .logout-container h1 {
+            font-size: 2.5em;
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        .logout-container p {
+            font-size: 1.2em;
+            color: #666;
+            margin-bottom: 30px;
+        }
+
+        .logout-container .btn {
+            font-size: 1.1em;
+            padding: 12px 24px;
+            border-radius: 5px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .logout-container .btn:hover {
+            background-color: #0056b3;
+        }
+
+        .logout-container .btn:focus {
+            outline: none;
+            box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.5);
+        }
+    </style>
+
+    <div class="logout-container">
+        <h1>Logout</h1>
         <p>Você foi desconectado com sucesso.</p>
         <a href="{% url 'home' %}" class="btn btn-primary">Voltar à página inicial</a>
     </div>
